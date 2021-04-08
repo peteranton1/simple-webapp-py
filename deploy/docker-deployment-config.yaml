@@ -1,0 +1,89 @@
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  annotations:
+    openshift.io/generated-by: OpenShiftWebConsole
+  creationTimestamp: '2021-04-07T20:33:11Z'
+  generation: 2
+  labels:
+    app: simple-webapp-py-docker
+  name: simple-webapp-py-docker
+  namespace: myproject
+  resourceVersion: '6022'
+  selfLink: >-
+    /apis/apps.openshift.io/v1/namespaces/myproject/deploymentconfigs/simple-webapp-py-docker
+spec:
+  replicas: 1
+  selector:
+    deploymentconfig: simple-webapp-py-docker
+  strategy:
+    activeDeadlineSeconds: 21600
+    resources: {}
+    rollingParams:
+      intervalSeconds: 1
+      maxSurge: 25%
+      maxUnavailable: 25%
+      timeoutSeconds: 600
+      updatePeriodSeconds: 1
+    type: Rolling
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: simple-webapp-py-docker
+        deploymentconfig: simple-webapp-py-docker
+    spec:
+      containers:
+        - image: >-
+            172.30.1.1:5000/myproject/simple-webapp-py-docker
+          imagePullPolicy: Always
+          name: simple-webapp-py-docker
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+  test: false
+  triggers:
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+          - simple-webapp-py-docker
+        from:
+          kind: ImageStreamTag
+          name: 'simple-webapp-py-docker:latest'
+          namespace: myproject
+        lastTriggeredImage: >-
+          172.30.1.1:5000/myproject/simple-webapp-py-docker
+      type: ImageChange
+    - type: ConfigChange
+status:
+  availableReplicas: 1
+  conditions:
+    - lastTransitionTime: '2021-04-07T20:38:14Z'
+      lastUpdateTime: '2021-04-07T20:38:14Z'
+      message: Deployment config has minimum availability.
+      status: 'True'
+      type: Available
+    - lastTransitionTime: '2021-04-07T20:38:15Z'
+      lastUpdateTime: '2021-04-07T20:38:15Z'
+      message: replication controller "simple-webapp-py-docker-1" successfully rolled out
+      reason: NewReplicationControllerAvailable
+      status: 'True'
+      type: Progressing
+  details:
+    causes:
+      - type: ConfigChange
+    message: config change
+  latestVersion: 1
+  observedGeneration: 2
+  readyReplicas: 1
+  replicas: 1
+  unavailableReplicas: 0
+  updatedReplicas: 1

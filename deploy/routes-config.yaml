@@ -1,0 +1,32 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  annotations:
+    openshift.io/host.generated: 'true'
+  creationTimestamp: '2021-04-08T00:05:29Z'
+  labels:
+    app: simple-webapp-py-docker
+  name: simple-webapp-py-docker
+  namespace: myproject
+  resourceVersion: '56116'
+  selfLink: >-
+    /apis/route.openshift.io/v1/namespaces/myproject/routes/simple-webapp-py-docker
+  uid: 20c6eeed-97fe-11eb-8863-08002732e709
+spec:
+  host: simple-webapp-py-docker-myproject.192.168.99.100.nip.io
+  port:
+    targetPort: 8080-tcp
+  to:
+    kind: Service
+    name: simple-webapp-py-docker
+    weight: 100
+  wildcardPolicy: None
+status:
+  ingress:
+    - conditions:
+        - lastTransitionTime: '2021-04-08T00:05:29Z'
+          status: 'True'
+          type: Admitted
+      host: simple-webapp-py-docker-myproject.192.168.99.100.nip.io
+      routerName: router
+      wildcardPolicy: None

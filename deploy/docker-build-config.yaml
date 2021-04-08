@@ -1,38 +1,21 @@
 apiVersion: build.openshift.io/v1
 kind: BuildConfig
 metadata:
-  annotations:
-    openshift.io/generated-by: OpenShiftWebConsole
-  creationTimestamp: '2021-04-07T20:33:11Z'
-  labels:
-    app: simple-webapp-py
-  name: simple-webapp-py
-  namespace: myproject
-  resourceVersion: '5645'
-  selfLink: >-
-    /apis/build.openshift.io/v1/namespaces/myproject/buildconfigs/simple-webapp-py
-  uid: 7879f3a0-97e0-11eb-8863-08002732e709
+  name: simple-webapp-py-docker
 spec:
   nodeSelector: null
   output:
     to:
       kind: ImageStreamTag
-      name: 'simple-webapp-py:latest'
-  postCommit: {}
-  resources: {}
-  runPolicy: Serial
+      name: 'simple-webapp-py-docker:latest'
   source:
     git:
-      ref: master
+      ref: feature/docker1
       uri: 'https://github.com/peteranton1/simple-webapp-py.git'
     type: Git
   strategy:
-    sourceStrategy:
-      from:
-        kind: ImageStreamTag
-        name: 'python:3.6'
-        namespace: openshift
-    type: Source
+    dockerStrategy:
+    type: Docker
   triggers:
     - imageChange:
         lastTriggeredImageID: >-
